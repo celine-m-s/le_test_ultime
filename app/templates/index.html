@@ -32,13 +32,37 @@
                   <p class="">
                     Connecte-toi à Facebook afin de connaître les résultats !
                   </p>
-                  <a href="#" class="btn btn-lg btn-outline big-button facebook_button">
+                  <p style="margin-top: 20px;">
+                    <div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="true"></div>
+                  </p>
+
+                  <!-- <a href="#" class="btn btn-lg btn-outline big-button facebook_button">
                       <img src="{{user_image}}" id="button_user_pic" alt="">Continuer en tant que {{ user_name }}
-                  </a>
+                  </a> -->
               </div>
 
           </div>
       </div>
   </header>
+
+
+
+
+
+
+
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v2.9&appId={{ fb_app_id }}";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
 
 {% endblock %}
