@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Header -->
+  <header>
+      <div class="container" id="maincontent" tabindex="-1">
+          <div class="row">
+              <div class="col-lg-6 col-lg-offset-3">
+                  <div class="card">
+                    <div class="row">
+                      <div class="col-sm-3 col-sm-offset-3">
+                          <img class="img-responsive img-circle user_profile" src="{{user_image}}">
+                      </div>
+                      <div class="col-sm-3">
+                        <h2 id="user-name">{{ user_name }}</h2>
+                      </div>
+                      <div class="col-sm-12">
+                        <p class="blur">Toi, tu sais comment utiliser la console ! Jamais à court d'idées pour réaliser ton objectif, tu es déterminé-e et persévérant-e. Tes amis disent d'ailleurs volontiers que tu as du caractère et que tu ne te laisses pas marcher sur les pieds. Un peu hacker sur les bords, tu aimes trouver des solutions à tout problème. N'aurais-tu pas un petit problème d'autorité ? ;-) </p>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+            <div class="row">
+
+              <div class="intro-text">
+                  <h1 class="name">Prêt-e à savoir qui tu es vraiment ?</h1>
+                  <hr class="star-light">
+                  <!-- <span class="skills">Fais le test !</span> -->
+              </div>
+              <div class="col-lg-8 col-lg-offset-2 text-center">
+                  <p class="">
+                    Connecte-toi à Facebook afin de connaître les résultats !
+                  </p>
+                  <a href="#" class="btn btn-lg btn-outline big-button facebook_button">
+                      <img src="{{user_image}}" id="button_user_pic" alt="">Continuer en tant que {{ user_name }}
+                  </a>
+              </div>
+
+          </div>
+      </div>
+  </header>
+
+{% endblock %}
