@@ -65,3 +65,15 @@ def update_content(id):
                            form=form,
                            description=content.description,
                            sex=content.sex)
+
+@app.route('/dashboard/contents/<int:id>/delete')
+@login_required
+def delete_content(id):
+    content = Content.query.get(id)
+    db.session.delete(content)
+    db.session.commit()
+    if Content.query.get(id) is None:
+        flash('La description a bien été supprimée')
+    else:
+        flash("Une erreur s'est produite. Merci de recommencer.")
+    return redirect(url_for('contents'))
