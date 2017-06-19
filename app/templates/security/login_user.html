@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% from "security/_macros.html" import render_field_with_errors, render_field %}
+{% include "security/_messages.html" %}
+
+<hr>
+<section id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2>Connexion</h2>
+                    <hr class="star-primary">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <form action="{{ url_for_security('login') }}" method="POST" name="login_user_form" id="contactForm" novalidate="">
+                            {{ login_user_form.hidden_tag() }}
+                            {{ render_field(login_user_form.next, class='form-control') }}
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                {{ render_field_with_errors(login_user_form.email, class='form-control', placeholder='Adresse email') }}
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+
+                        <div class="row control-group">
+                            <div class="form-group col-xs-12 floating-label-form-group controls">
+                                {{ render_field_with_errors(login_user_form.password, class='form-control', placeholder='Mot de passe') }}
+                                <p class="help-block text-danger"></p>
+                            </div>
+                        </div>
+                        <br>
+
+                        <div id="success"></div>
+                        <div class="row">
+                            <div class="form-group col-xs-12">
+                              <!-- {{ render_field(login_user_form.submit, class='btn btn-success btn-lg') }} -->
+                                <button type="submit" class="btn btn-success btn-lg">Envoyer</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
