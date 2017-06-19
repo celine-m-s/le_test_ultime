@@ -28,7 +28,6 @@ def new_content():
         c = Content(form.description.data, form.sex.data)
         db.session.add(c)
         db.session.commit()
-        import pdb; pdb.set_trace()
         flash('Une nouvelle description a été ajoutée avec succès ! Description : {} Sexe : {}'.format(form.description.data, form.sex.data))
         return redirect(url_for('new_content', method='GET'))
 
@@ -40,8 +39,12 @@ def new_content():
                            description=content.description,
                            sex=content.sex)
 
-
-
+@app.route('/contents')
+@login_required
+def contents():
+    contents = Content.query.all()
+    total = len(contents)
+    return render_template('contents/index.html', contents=contents, total=total)
 
 
 #

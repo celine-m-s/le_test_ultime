@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block menu %}
+<li class="page-scroll">
+    <a href="{{ url_for('dashboard') }}">Admin</a>
+</li>
+<li class="page-scroll">
+    <a href="{{ url_for('contents') }}">Descriptions</a>
+</li>
+{% endblock %}
+
+{% block content %}
+<section>
+  <div class="container">
+    <div class="text-center">
+        <a href="{{ url_for('new_content') }}"><button class="btn btn-success btn-lg center">Ajouter une description</button></a>
+    </div>
+
+    <hr>
+
+    <p>Il y a {{ total }} descriptions. </p>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Description</th>
+            <th>Sex</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for content in contents: %}
+          <tr>
+            <th scope="row">{{ content.id }}</th>
+            <td>{{ content.description }}</td>
+            <td>{{ content.sex }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</section>
+
+
+
+{% endblock %}

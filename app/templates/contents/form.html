@@ -1,5 +1,14 @@
 {% extends 'base.html' %}
 
+{% block menu %}
+<li class="page-scroll">
+    <a href="{{ url_for('dashboard') }}">Admin</a>
+</li>
+<li class="page-scroll">
+    <a href="{{ url_for('contents') }}">Descriptions</a>
+</li>
+{% endblock %}
+
 {% block content %}
 <br>
 <section id="contact">
@@ -13,11 +22,11 @@
 
             {% with messages = get_flashed_messages() %}
             {% if messages %}
-              {% for message in messages %}
-                  <p>{{ message }} </p>
-              {% endfor %}
+                {% for message in messages %}
+                    <p>{{ message }} </p>
+                {% endfor %}
             {% endif %}
-          {% endwith %}
+            {% endwith %}
 
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2">
