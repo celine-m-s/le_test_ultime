@@ -97,10 +97,11 @@ def find_content(sex):
 def result():
     content = find_content('female')
     description = content.description
-    # get name
-    # get picture
+    first_name = request.args['first_name']
+    image = 'http://graph.facebook.com/' + request.args['id'] + '/picture?type=normal';
+    # get  'http://graph.facebook.com/' + response.id + '/picture?type=normal';
     return render_template('result.html', page_title='Le test ultime !', \
-                                   user_image='static/img/profile.png', \
-                                   user_name='Julio', \
+                                   user_image=image, \
+                                   user_name=first_name, \
                                    fb_app_id=app.config['FB_APP_ID'], \
                                    description=description)
