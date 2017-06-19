@@ -6,5 +6,4 @@ app = Flask(__name__)
 app.config.from_object('config')
 # app.config.from_envvar('YOURAPPLICATION_SETTINGS')
 
-from app import views
-from app import models
+from app import views, models

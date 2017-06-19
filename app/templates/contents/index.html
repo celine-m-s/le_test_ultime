@@ -1,17 +1,13 @@
 {% extends 'base.html' %}
 
 {% block menu %}
-<li class="page-scroll">
-    <a href="{{ url_for('dashboard') }}">Admin</a>
-</li>
-<li class="page-scroll">
-    <a href="{{ url_for('contents') }}">Descriptions</a>
-</li>
+  {% include 'admin/menu.html' %}
 {% endblock %}
 
 {% block content %}
 <section>
   <div class="container">
+    {% include 'flash_messages.html' %}
     <div class="text-center">
         <a href="{{ url_for('new_content') }}"><button class="btn btn-success btn-lg center">Ajouter une description</button></a>
     </div>
@@ -26,6 +22,7 @@
             <th>Id</th>
             <th>Description</th>
             <th>Sex</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -34,6 +31,10 @@
             <th scope="row">{{ content.id }}</th>
             <td>{{ content.description }}</td>
             <td>{{ content.sex }}</td>
+            <td>
+              <a href="{{ url_for('update_content', id=content.id) }}">Modifier</a>
+              <!-- <a href="#">Supprimer</a> -->
+            </td>
           </tr>
           {% endfor %}
         </tbody>

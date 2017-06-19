@@ -16,14 +16,13 @@ def index():
 @app.route('/dashboard')
 @login_required
 def dashboard():
-    return render_template('dashboard.html')
+    return render_template('admin/index.html')
 
-@app.route('/contents/new', methods=['GET', 'POST'])
+@app.route('/dashboard/contents/new', methods=['GET', 'POST'])
 @login_required
 def new_content():
-    content = Content('A description', 0)
     form = ContentForm()
-
+    content = Content('A description', 'Male')
     if form.validate_on_submit():
         c = Content(form.description.data, form.sex.data)
         db.session.add(c)
@@ -39,22 +38,30 @@ def new_content():
                            description=content.description,
                            sex=content.sex)
 
-@app.route('/contents')
+@app.route('/dashboard/contents')
 @login_required
 def contents():
     contents = Content.query.all()
     total = len(contents)
     return render_template('contents/index.html', contents=contents, total=total)
 
+@app.route('/dashboard/contents/<int:id>/edit', methods=['GET', 'POST'])
+@login_required
+def update_content(id):
+    content = Content.query.get(id)
+    form = ContentForm()
+    if form.validate_on_submit():
+        content.description = form.description.data
+        content.sex = form.sex.data
+        db.session.add(content)
+        db.session.commit()
+        flash('La description a bien été modifiée ! Description : {} Sexe : {}'.format(form.description.data, form.sex.data))
+        return redirect(url_for('contents'))
 
-#
-#
-# @app.route('/contents/<id>/update')
-# @login_required
-# def update_content(id):
-#     return render_template('contents/form.html')
-#
-# @app.route('/contents/<id>/delete')
-# @login_required
-# def delete_content(id):
-#     return render_template('contents/form.html')
+    return render_template('contents/form.html',
+                           path=url_for('update_content', id=id),
+                           title='Mise à jour',
+                           method='POST',
+                           form=form,
+                           description=content.description,
+                           sex=content.sex)

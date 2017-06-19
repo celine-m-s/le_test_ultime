@@ -46,14 +46,20 @@ class Content(db.Model):
     def _get_sex(self):
         return SEX_TYPES[self.sex]
 
-
 # Setup Flask-Security
 user_datastore = SQLAlchemyUserDatastore(db, User, Role)
 security = Security(app, user_datastore)
 
-# Create a user to test with
-@app.before_first_request
-def create_user():
+# Create an admin user
+import os
+if os.access(os.path.join('app.db'), os.R_OK) is False:
     db.create_all()
+    # Create an admin user
     user_datastore.create_user(email=app.config['ADMIN_EMAIL'], password=app.config['ADMIN_PW'])
     db.session.commit()
+
+    # Create seed data
+    for n in range(1, 10):
+        c = Content('Description {}'.format(n), 'male')
+        db.session.add(c)
+        db.session.commit()

@@ -2,3 +2,4 @@ env/
 __pycache__/
 config.py
 app/__pycache__/
+app.db
