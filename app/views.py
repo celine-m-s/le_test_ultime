@@ -4,14 +4,18 @@ from flask_security import Security, login_required
 from app import app
 from .models import db, Content
 from .forms import ContentForm
+import random
 
 @app.route('/')
 @app.route('/index')
 def index():
+    description = "Toi, tu sais comment utiliser la console ! Jamais à court d'idées pour réaliser ton objectif, tu es déterminé-e et persévérant-e. Tes amis disent d'ailleurs volontiers que tu as du caractère et que tu ne te laisses pas marcher sur les pieds. Un peu hacker sur les bords, tu aimes trouver des solutions à tout problème. N'aurais-tu pas un petit problème d'autorité ? ;-)"
     return render_template('index.html', page_title='Le test ultime !', \
                                          user_image='static/img/profile.png', \
                                          user_name='Julio', \
-                                         fb_app_id=app.config['FB_APP_ID'])
+                                         fb_app_id=app.config['FB_APP_ID'],\
+                                         blur=True,
+                                         description=description)
 
 @app.route('/dashboard')
 @login_required
@@ -77,3 +81,26 @@ def delete_content(id):
     else:
         flash("Une erreur s'est produite. Merci de recommencer.")
     return redirect(url_for('contents'))
+
+###############################
+########## Test ###############
+###############################
+
+def find_content(sex):
+    contents = Content.query.filter(Content.sex == sex).all()
+    ids = [content.id for content in contents]
+    the_one = Content.query.get(random.choice(ids))
+    return the_one
+
+
+@app.route('/result')
+def result():
+    content = find_content('female')
+    description = content.description
+    # get name
+    # get picture
+    return render_template('result.html', page_title='Le test ultime !', \
+                                   user_image='static/img/profile.png', \
+                                   user_name='Julio', \
+                                   fb_app_id=app.config['FB_APP_ID'], \
+                                   description=description)

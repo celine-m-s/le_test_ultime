@@ -6,19 +6,7 @@
       <div class="container" id="maincontent" tabindex="-1">
           <div class="row">
               <div class="col-lg-6 col-lg-offset-3">
-                  <div class="card">
-                    <div class="row">
-                      <div class="col-sm-3 col-sm-offset-3">
-                          <img class="img-responsive img-circle user_profile" src="{{user_image}}">
-                      </div>
-                      <div class="col-sm-3">
-                        <h2 id="user-name">{{ user_name }}</h2>
-                      </div>
-                      <div class="col-sm-12">
-                        <p class="blur">Toi, tu sais comment utiliser la console ! Jamais à court d'idées pour réaliser ton objectif, tu es déterminé-e et persévérant-e. Tes amis disent d'ailleurs volontiers que tu as du caractère et que tu ne te laisses pas marcher sur les pieds. Un peu hacker sur les bords, tu aimes trouver des solutions à tout problème. N'aurais-tu pas un petit problème d'autorité ? ;-) </p>
-                      </div>
-                    </div>
-                  </div>
+                  {% include 'card.html' %}
               </div>
             </div>
             <div class="row">
