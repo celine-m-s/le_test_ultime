@@ -3,7 +3,7 @@ from flask_security import login_required
 
 from .models import db, Content
 from .forms import ContentForm
-from .utils import find_content, CreateOpenGraphImage
+from .utils import find_content, OpenGraphImage
 
 app = Flask(__name__)
 
@@ -36,7 +36,9 @@ def new_content():
         c = Content(form.description.data, form.sex.data)
         db.session.add(c)
         db.session.commit()
-        flash('Une nouvelle description a été ajoutée avec succès ! Description : {} Sexe : {}'.format(form.description.data, form.sex.data))
+        flash('Une nouvelle description a été ajoutée avec succès ! Description : {} Sexe : {}'.format(
+            form.description.data, form.sex.data
+        ))
         return redirect(url_for('new_content', method='GET'))
 
     return render_template('contents/form.html', \
@@ -50,9 +52,9 @@ def new_content():
 @app.route('/dashboard/contents')
 @login_required
 def contents():
-    contents = Content.query.all()
-    total = len(contents)
-    return render_template('contents/index.html', contents=contents, total=total)
+    all_contents = Content.query.all()
+    total = len(all_contents)
+    return render_template('contents/index.html', contents=all_contents, total=total)
 
 @app.route('/dashboard/contents/<int:id>/edit', methods=['GET', 'POST'])
 @login_required
@@ -64,7 +66,9 @@ def update_content(id):
         content.sex = form.sex.data
         db.session.add(content)
         db.session.commit()
-        flash('La description a bien été modifiée ! Description : {} Sexe : {}'.format(form.description.data, form.sex.data))
+        flash('La description a bien été modifiée ! Description : {} Sexe : {}'.format(
+            form.description.data, form.sex.data
+        ))
         return redirect(url_for('contents'))
 
     return render_template('contents/form.html',
@@ -99,7 +103,7 @@ def result():
     uid = request.args['id']
     base_url = app.config['BASE_URL']
     profile_pic = 'http://graph.facebook.com/' + uid + '/picture?type=large'
-    fb_img = CreateOpenGraphImage(first_name, profile_pic, uid, description)
+    fb_img = OpenGraphImage(first_name, profile_pic, uid, description)
     og_image = base_url + '/' + fb_img.location
     return render_template('result.html', page_title='Voici qui je suis vraiment !', \
                                    user_image=profile_pic, \

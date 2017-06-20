@@ -2,6 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_security import SQLAlchemyUserDatastore, \
     UserMixin, RoleMixin
 
+
 # Database
 # Create database connection object
 db = SQLAlchemy()
@@ -27,11 +28,8 @@ class User(db.Model, UserMixin):
     roles = db.relationship('Role', secondary=roles_users,
                             backref=db.backref('users', lazy='dynamic'))
 
-class Content(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    description = db.Column(db.String(200))
-    sex = db.Column('sex', db.Integer, nullable=False, default=1)
 
+class Content(db.Model):
     GENDER_FEMALE = 0
     GENDER_MALE = 1
     GENDER_OTHER = 2
@@ -41,6 +39,10 @@ class Content(db.Model):
         GENDER_OTHER: "Other"
     }
 
+    id = db.Column(db.Integer, primary_key=True)
+    description = db.Column(db.String(200))
+    sex = db.Column('sex', db.Integer, nullable=False, default=GENDER_MALE)
+
     def __init__(self, description, sex):
         self.description = description
         self.sex = sex
@@ -48,8 +50,10 @@ class Content(db.Model):
     def _get_sex(self):
         return self.GENDERS[self.sex]
 
+
 # Setup Flask-Security
 user_datastore = SQLAlchemyUserDatastore(db, User, Role)
+
 
 def init_db(admin_email, admin_password):
     db.drop_all()

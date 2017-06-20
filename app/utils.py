@@ -11,11 +11,11 @@ def find_content(sex):
     the_one = Content.query.get(random.choice(ids))
     return the_one
 
-class CreateOpenGraphImage:
+class OpenGraphImage:
 
     def __init__(self, first_name, profile_path, uid, description):
         self.location = self._path(uid)
-        background = self.base(uid)
+        background = self.base()
         # img = self.to_img(profile_path)
         # cropped = self.crop_image(img)
         # with_corners = self.add_corners(cropped)
@@ -24,33 +24,21 @@ class CreateOpenGraphImage:
         self.print_on_img(background, first_name.capitalize(), 70, (450, 50))
         description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
+        # Make sentences of 7 words from description
+        sentence_length = 7
         words = description.split()
-        c = 7
-        sentences = [[]]
-        tmp_c = 0
-        for w in words:
-            if tmp_c < c:
-                sentences[-1].append(w)
-                tmp_c +=1
-            else:
-                sentences.append([])
-                sentences[-1].append(w)
-                tmp_c = 1
-
-        c = 0
-        for sentence in sentences:
-            s = ' '.join(sentence)
-            top = 200+c
+        for i in range(0, len(words), sentence_length):
+            sentence = ' '.join(words[i:i+sentence_length])
+            top = 200 + i*40/sentence_length
             left = 100
-            self.print_on_img(background, s, 40, (left, top))
-            c += 40
+            self.print_on_img(background, sentence, 40, (left, top))
 
         background.save(self.location)
 
     def _path(self, uid):
         return os.path.join('app', 'tmp', '%s.jpg' % uid)
 
-    def base(self, uid):
+    def base(self):
         img = Image.new('RGB', (1200, 630), '#18BC9C')
         img.save(self.location, 'JPEG')
         return img
@@ -78,7 +66,7 @@ class CreateOpenGraphImage:
     def print_on_img(self, img, text, size, position):
         font = ImageFont.truetype(os.path.join('app', 'static', 'fonts', 'Arcon-Regular.otf'), size)
         draw = ImageDraw.Draw(img)
-        draw.text(position, text, (255,255,255), font=font)
+        draw.text(position, text, (255, 255, 255), font=font)
         return img
 
     # Not working for the moment
