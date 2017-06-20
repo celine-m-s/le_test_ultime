@@ -4,7 +4,7 @@ from flask_security import Security, login_required
 from app import app
 from .models import db, Content
 from .forms import ContentForm
-import random
+from .utils import find_content, CreateOpenGraphImage
 
 @app.route('/')
 @app.route('/index')
@@ -86,22 +86,21 @@ def delete_content(id):
 ########## Test ###############
 ###############################
 
-def find_content(sex):
-    contents = Content.query.filter(Content.sex == sex).all()
-    ids = [content.id for content in contents]
-    the_one = Content.query.get(random.choice(ids))
-    return the_one
-
-
 @app.route('/result')
 def result():
     content = find_content('female')
     description = content.description
     first_name = request.args['first_name']
-    image = 'http://graph.facebook.com/' + request.args['id'] + '/picture?type=normal';
-    # get  'http://graph.facebook.com/' + response.id + '/picture?type=normal';
-    return render_template('result.html', page_title='Le test ultime !', \
-                                   user_image=image, \
+    uid = request.args['id']
+    base_url = app.config['BASE_URL']
+    profile_pic = 'http://graph.facebook.com/' + uid + '/picture?type=large'
+    fb_img = CreateOpenGraphImage(first_name, profile_pic, uid, description)
+    og_image = base_url + '/' + fb_img.location
+    return render_template('result.html', page_title='Voici qui je suis vraiment !', \
+                                   user_image=profile_pic, \
                                    user_name=first_name, \
                                    fb_app_id=app.config['FB_APP_ID'], \
-                                   description=description)
+                                   description=description, \
+                                   og_image=og_image, \
+                                   og_url=base_url, \
+                                   og_description='Toi aussi, fais le test !')

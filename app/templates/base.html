@@ -15,6 +15,8 @@
       <title>Le test ultime !</title>
     {% endif %}
 
+    {% block open_graph %}
+    {% endblock %}
     <!-- Bootstrap Core CSS -->
     <link href="{{ url_for('static', filename='css/bootstrap/bootstrap.min.css') }}" rel="stylesheet">
 
@@ -35,6 +37,8 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+    <script src="{{ url_for('static', filename='js/jquery/jquery.min.js') }}"></script>
 
 </head>
 
@@ -128,9 +132,6 @@
             <i class="fa fa-chevron-up"></i>
         </a>
     </div>
-
-    <!-- jQuery -->
-    <script src="{{ url_for('static', filename='js/jquery/jquery.min.js') }}"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="{{ url_for('static', filename='js/bootstrap/bootstrap.min.js') }}"></script>

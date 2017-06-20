@@ -1,5 +1,13 @@
 {% extends 'base.html' %}
 
+{% block open_graph %}
+<meta property="og:title" content="{{ page_title }}" />
+<meta property="og:type" content="image/jpeg" />
+<meta property="og:url" content="{{ og_url }}" />
+<meta property="og:image" content="{{ og_image }}" />
+<meta property="og:description" content="{{ og_description }}" />
+{% endblock %}
+
 {% block content %}
 <!-- Header -->
   <header>
@@ -11,7 +19,7 @@
             </div>
             <div class="row">
               <div class="col-lg-8 col-lg-offset-2 text-center">
-                  <a href="#" class="btn btn-lg btn-outline big-button facebook_button">
+                  <a class="btn btn-lg btn-outline big-button facebook_button" id="FbShare">
                       Partager sur Facebook
                   </a>
               </div>
@@ -19,5 +27,40 @@
           </div>
       </div>
   </header>
+
+  <div id="fb-root"></div>
+  <script>
+
+  // This is called with the results from from FB.getLoginStatus().
+
+
+  window.fbAsyncInit = function() {
+  FB.init({
+    appId      : '{{fb_app_id}}',
+    cookie     : true,  // enable cookies to allow the server to access
+                        // the session
+    xfbml      : true,  // parse social plugins on this page
+    version    : 'v2.8' // use graph api version 2.8
+  });
+
+  };
+
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v2.9&appId={{ fb_app_id }}";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));  // Here we run a very simple test of the Graph API after login is
+  // successful.  See statusChangeCallback() for when this call is made.
+
+  $('#FbShare').click(function(){
+    FB.ui({
+      method: 'share',
+      href: window.location.href,
+    }, function(response){});
+  });
+
+  </script>
 
 {% endblock %}
