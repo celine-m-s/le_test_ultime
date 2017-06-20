@@ -30,7 +30,6 @@
 
   <div id="fb-root"></div>
   <script>
-    // This is called with the results from from FB.getLoginStatus().
     window.fbAsyncInit = function() {
       FB.init({
         appId      : '{{fb_app_id}}',
@@ -47,8 +46,7 @@
       js = d.createElement(s); js.id = id;
       js.src = "//connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v2.9&appId={{ fb_app_id }}";
       fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));  // Here we run a very simple test of the Graph API after login is
-    // successful.  See statusChangeCallback() for when this call is made.
+    }(document, 'script', 'facebook-jssdk'));
 
     $('#FbShare').click(function(){
       FB.ui({
