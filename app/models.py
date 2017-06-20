@@ -6,13 +6,6 @@ from flask_security import SQLAlchemyUserDatastore, \
 # Create database connection object
 db = SQLAlchemy()
 
-# Constants
-SEX_TYPES = [
-    'Male',
-    'Female',
-    'Other',
-]
-
 # Define models
 roles_users = db.Table('roles_users',
         db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
@@ -39,12 +32,21 @@ class Content(db.Model):
     description = db.Column(db.String(200))
     sex = db.Column('sex', db.Integer, nullable=False, default=1)
 
+    GENDER_FEMALE = 0
+    GENDER_MALE = 1
+    GENDER_OTHER = 2
+    GENDERS = {
+        GENDER_FEMALE: "Female",
+        GENDER_MALE: "Male",
+        GENDER_OTHER: "Other"
+    }
+
     def __init__(self, description, sex):
         self.description = description
         self.sex = sex
 
     def _get_sex(self):
-        return SEX_TYPES[self.sex]
+        return self.GENDERS[self.sex]
 
 # Setup Flask-Security
 user_datastore = SQLAlchemyUserDatastore(db, User, Role)
@@ -59,7 +61,7 @@ def init_db(admin_email, admin_password):
     # Create seed data
     lorem = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     for _ in range(1, 10):
-        c = Content('Description {}'.format(lorem), 'male')
+        c = Content('Description {}'.format(lorem), Content.GENDER_MALE)
         db.session.add(c)
 
     db.session.commit()
