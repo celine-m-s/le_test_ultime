@@ -1,13 +1,30 @@
-Start a server: `python run.py`
 
-Questions :
+Start by editing `config.py`.
+
+Initialize database:
+
+    FLASK_APP=run.py flask initdb
+
+Re-running this method deletes all data. be careful!
+
+Start a server in debug mode: 
+
+    python run.py
+
+Start a server in production mode:
+
+    FLASK_APP=run.py flask run
+
+## Questions
+
 - Comment protéger des informations essentielles ? => un fichier de configs qu'on peut après retrouver autrement sur le serveur.
 - Est-ce vraiment intéressant d'utiliser Flask Security dans notre cas ?
 - Pas de PATCH et PUT ??
 - Problème de couche alpha qui m'empêche d'arrondir les angles de la photo de profil.
 - FB share à tester en production
 
-Img:
+## Img
+
 - http://pillow.readthedocs.io/en/4.1.x/handbook/tutorial.html#reading-and-writing-images
 - http://pillow.readthedocs.io/en/4.1.x/handbook/concepts.html#concept-modes
 - https://developers.facebook.com/docs/graph-api/reference/profile-picture-source/
@@ -24,3 +41,9 @@ Img:
 - http://ondras.zarovi.cz/sql/demo/
 - https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-vi-profile-page-and-avatars
 - http://www.science-emergence.com/Articles/S%C3%A9lectionner-une-partie-dune-image-avec-PIL-de-python/
+
+## TODO
+
+- Note que `run.py` fonctionnera toujours en mode debug. Ca risque d'être un problème pour le déploiement sur heroku, non ?
+- Il faudrait donner un nom à l'application pour renommer le répertoire `app` en quelque chose d'autre. Ex: `fbapp` ?
+- Il faudrait renommer "sex" en "gender". Je crois qu'en anglais, "sex" fait référence à l'acte, et pas au genre...

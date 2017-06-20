@@ -1,19 +1,24 @@
-from flask import render_template, url_for, request, redirect, flash
-from flask_security import Security, login_required
+from flask import Flask, render_template, url_for, request, redirect, flash
+from flask_security import login_required
 
-from app import app
 from .models import db, Content
 from .forms import ContentForm
 from .utils import find_content, CreateOpenGraphImage
+
+app = Flask(__name__)
+
+# Config options - Make sure you created a 'config.py' file.
+app.config.from_object('config')
+# app.config.from_envvar('YOURAPPLICATION_SETTINGS')
 
 @app.route('/')
 @app.route('/index')
 def index():
     description = "Toi, tu sais comment utiliser la console ! Jamais à court d'idées pour réaliser ton objectif, tu es déterminé-e et persévérant-e. Tes amis disent d'ailleurs volontiers que tu as du caractère et que tu ne te laisses pas marcher sur les pieds. Un peu hacker sur les bords, tu aimes trouver des solutions à tout problème. N'aurais-tu pas un petit problème d'autorité ? ;-)"
-    return render_template('index.html', page_title='Le test ultime !', \
-                                         user_image='static/img/profile.png', \
-                                         user_name='Julio', \
-                                         fb_app_id=app.config['FB_APP_ID'],\
+    return render_template('index.html', page_title='Le test ultime !',
+                                         user_image='static/img/profile.png',
+                                         user_name='Julio',
+                                         fb_app_id=app.config['FB_APP_ID'],
                                          blur=True,
                                          description=description)
 
