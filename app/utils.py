@@ -49,18 +49,10 @@ class OpenGraphImage:
         return Image.open(image_file)
 
     def crop_image(self, pic):
-        if pic.width > pic.height:
-            left = int(pic.width / 3)
-            top = 0
-            height = pic.height
-            width = pic.height
-            box = (left, top, width+left, height)
-        else:
-            left = 0
-            top = int(pic.height / 3)
-            height = pic.width
-            width = pic.width
-            box = (left, top, width, height+top)
+        size = min(pic.width, pic.height)
+        left_margin = max(int((pic.width - pic.height)/2), 0)
+        top_margin =  max(int((pic.height - pic.width)/2), 0)
+        box = (left_margin, top_margin, size + left_margin, size + top_margin)
         return pic.crop(box)
 
     def print_on_img(self, img, text, size, position):
