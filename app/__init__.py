@@ -1,9 +1,16 @@
+import os
 from flask import Flask
+from flask_security import Security
 
-app = Flask(__name__)
+from .views import app
+from . import models
 
-# Config options - Make sure you created a 'config.py' file.
-app.config.from_object('config')
-# app.config.from_envvar('YOURAPPLICATION_SETTINGS')
+# Connect sqlalchemy to app
+models.db.init_app(app)
 
-from app import views, models
+# Setup Flask-Security
+security = Security(app, models.user_datastore)
+
+@app.cli.command()
+def initdb():
+    models.init_db(app.config['ADMIN_EMAIL'], app.config['ADMIN_PW'])
