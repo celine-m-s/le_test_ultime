@@ -4,6 +4,8 @@ Questions :
 - Comment protéger des informations essentielles ? => un fichier de configs qu'on peut après retrouver autrement sur le serveur.
 - Est-ce vraiment intéressant d'utiliser Flask Security dans notre cas ?
 - Pas de PATCH et PUT ??
+- Problème de couche alpha qui m'empêche d'arrondir les angles de la photo de profil.
+- FB share à tester en production
 
 Img:
 - http://pillow.readthedocs.io/en/4.1.x/handbook/tutorial.html#reading-and-writing-images
