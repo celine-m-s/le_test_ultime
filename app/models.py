@@ -63,7 +63,7 @@ def init_db(admin_email, admin_password):
     user_datastore.create_user(email=admin_email, password=admin_password)
 
     # Create seed data
-    db.session.add(Content('Sailor', Content.GENDER_MALE))
-    db.session.add(Content('Lula', Content.GENDER_FEMALE))
+    db.session.add(Content("What's your favorite scary movie?", Content.GENDER_MALE))
+    db.session.add(Content("THIS IS SPARTAAAAAAAAAAAAAAAAAAA", Content.GENDER_FEMALE))
 
     db.session.commit()
