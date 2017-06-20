@@ -4,6 +4,7 @@ import urllib.request as urllib
 import io
 from PIL import Image, ImageDraw, ImageOps, ImageFont
 from app.models import Content
+from flask import url_for
 
 def find_content(sex):
     contents = Content.query.filter(Content.sex == sex).all()
@@ -14,12 +15,15 @@ def find_content(sex):
 class OpenGraphImage:
 
     def __init__(self, first_name, profile_path, uid, description):
-        self.location = self._path(uid)
+        self.location = self._location(uid)
+        self.cover_location = self._cover_location(uid)
+
         background = self.base()
-        # img = self.to_img(profile_path)
-        # cropped = self.crop_image(img)
+        img = self.to_img(profile_path)
+        cropped = self.crop_image(img)
+        cropped.resize((100, 100))
+        cropped.save(self._path(uid, 'cover_'))
         # with_corners = self.add_corners(cropped)
-        # ok = cropped.resize((100, 100))
         # air = background.paste(ok, (300, 100, ok.width+500, ok.height+100))
         self.print_on_img(background, first_name.capitalize(), 70, (450, 50))
         description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
@@ -33,14 +37,20 @@ class OpenGraphImage:
             left = 100
             self.print_on_img(background, sentence, 40, (left, top))
 
-        background.save(self.location)
+        background.save(self._path(uid))
 
-    def _path(self, uid):
-        return os.path.join('app', 'tmp', '%s.jpg' % uid)
+    def _path(self, uid, pre=''):
+        return os.path.join('app', 'static', 'tmp', '{}{}.jpg'.format(pre, uid))
+
+    def _location(self, uid):
+        return url_for('static', filename='tmp/{}.jpg'.format(uid))
+
+    def _cover_location(self, uid):
+        return url_for('static', filename='tmp/cover_{}.jpg'.format(uid))
 
     def base(self):
         img = Image.new('RGB', (1200, 630), '#18BC9C')
-        img.save(self.location, 'JPEG')
+        # img.save(self.path, 'JPEG')
         return img
 
     def to_img(self, path):

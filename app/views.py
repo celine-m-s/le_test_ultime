@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request, redirect, flash
+from flask import Flask, render_template, url_for, request, redirect, flash, send_from_directory
 from flask_security import login_required
 
 from .models import db, Content
@@ -104,9 +104,10 @@ def result():
     base_url = app.config['BASE_URL']
     profile_pic = 'http://graph.facebook.com/' + uid + '/picture?type=large'
     fb_img = OpenGraphImage(first_name, profile_pic, uid, description)
-    og_image = base_url + '/' + fb_img.location
+    og_image = base_url + fb_img.location
+
     return render_template('result.html', page_title='Voici qui je suis vraiment !', \
-                                   user_image=profile_pic, \
+                                   user_image=fb_img.cover_location, \
                                    user_name=first_name, \
                                    fb_app_id=app.config['FB_APP_ID'], \
                                    description=description, \
