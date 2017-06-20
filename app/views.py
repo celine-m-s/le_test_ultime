@@ -97,7 +97,7 @@ def delete_content(id):
 
 @app.route('/result')
 def result():
-    content = find_content('female')
+    content = find_content(Content.GENDER_FEMALE)
     description = content.description
     first_name = request.args['first_name']
     uid = request.args['id']
