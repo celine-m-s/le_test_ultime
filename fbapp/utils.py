@@ -72,13 +72,13 @@ class OpenGraphImage:
         return img
 
     # Not working for the moment
-    def add_corners(self, image):
-        size = (128, 128)
-        mask = Image.new('L', size, 0)
-        draw = ImageDraw.Draw(mask)
-        draw.ellipse((0, 0) + size, fill=255)
-        output = ImageOps.fit(image, mask.size, centering=(0.5, 0.5))
-        return output.putalpha(mask)
+    # def add_corners(self, image):
+    #     size = (128, 128)
+    #     mask = Image.new('L', size, 0)
+    #     draw = ImageDraw.Draw(mask)
+    #     draw.ellipse((0, 0) + size, fill=255)
+    #     output = ImageOps.fit(image, mask.size, centering=(0.5, 0.5))
+    #     return output.putalpha(mask)
 
         # im = image
         # bigsize = (im.size[0] * 3, im.size[1] * 3)

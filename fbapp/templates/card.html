@@ -7,11 +7,7 @@
       <h2 id="user-name">{{ user_name }}</h2>
     </div>
     <div class="col-sm-12">
-      {% if blur %}
-      <p class="blur">{{ description }}</p>
-      {% else %}
-      <p>{{ description }}</p>
-      {% endif %}
+      <p {% if blur %}class="blur"{% endif %}>{{ description }}</p>
     </div>
   </div>
 </div>

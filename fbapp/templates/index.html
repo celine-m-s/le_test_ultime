@@ -13,7 +13,6 @@
       <div class="intro-text">
         <h1 class="name">Prêt-e à savoir qui tu es vraiment ?</h1>
         <hr class="star-light">
-        <!-- <span class="skills">Fais le test !</span> -->
       </div>
       <div class="col-lg-8 col-lg-offset-2 text-center">
         <p class="">
@@ -22,10 +21,6 @@
         <p style="margin-top: 20px;">
           <div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="true"></div>
         </p>
-
-        <!-- <a href="#" class="btn btn-lg btn-outline big-button facebook_button">
-          <img src="{{user_image}}" id="button_user_pic" alt="">Continuer en tant que {{ user_name }}
-        </a> -->
       </div>
     </div>
   </div>
@@ -46,7 +41,7 @@
           callAPI()
       }
     } else {
-      // The person is not logged into your app or we are unable to tell.
+      // The person is not logged into our app or Facebook is unable to tell.
       document.getElementById('status').innerHTML = 'Please log ' + 'into this app.';
       FB.login(function(response) {
         window.response = response
@@ -57,7 +52,7 @@
 
   window.fbAsyncInit = function() {
     FB.init({
-      appId      : '{{fb_app_id}}',
+      appId      : '{{ fb_app_id }}',
       cookie     : true,  // enable cookies to allow the server to access
                           // the session
       xfbml      : true,  // parse social plugins on this page

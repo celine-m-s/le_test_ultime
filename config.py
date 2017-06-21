@@ -1,3 +1,6 @@
+import os
+
+# To generate a new secret key:
 # >>> import random, string
 # >>> "".join([random.choice(string.printable) for _ in range(24)])
 SECRET_KEY = ";G(cVsHnI0XQCwLx/_dp=.:~"
@@ -15,7 +18,6 @@ ADMIN_EMAIL = 'matt@nobien.net'
 ADMIN_PW = 'supersuper'
 
 # Database settings
-import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
