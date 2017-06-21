@@ -25,7 +25,12 @@ def index():
 @fbapp.route('/dashboard')
 @login_required
 def dashboard():
-    return render_template('admin/index.html')
+    all_contents = Content.query.all()
+    total = len(all_contents)
+    return render_template('admin/index.html',
+                            all_contents=all_contents,
+                            total=total,
+                            root_url=url_for('dashboard'))
 
 @fbapp.route('/dashboard/contents/new', methods=['GET', 'POST'])
 @login_required
@@ -47,14 +52,8 @@ def new_content():
                            method='POST',
                            form=form,
                            description=content.description,
-                           gender=content.gender)
-
-@fbapp.route('/dashboard/contents')
-@login_required
-def contents():
-    all_contents = Content.query.all()
-    total = len(all_contents)
-    return render_template('contents/index.html', contents=all_contents, total=total)
+                           gender=content.gender,
+                           root_url=url_for('dashboard'))
 
 @fbapp.route('/dashboard/contents/<int:id>/edit', methods=['GET', 'POST'])
 @login_required
@@ -69,7 +68,7 @@ def update_content(id):
         flash('La description a bien été modifiée ! Description : {} Sexe : {}'.format(
             form.description.data, form.gender.data
         ))
-        return redirect(url_for('contents'))
+        return redirect(url_for('dashboard'))
 
     return render_template('contents/form.html',
                            path=url_for('update_content', id=id),
@@ -77,7 +76,8 @@ def update_content(id):
                            method='POST',
                            form=form,
                            description=content.description,
-                           gender=content.gender)
+                           gender=content.gender,
+                           root_url=url_for('dashboard'))
 
 @fbapp.route('/dashboard/contents/<int:id>/delete')
 @login_required
@@ -89,7 +89,7 @@ def delete_content(id):
         flash('La description a bien été supprimée')
     else:
         flash("Une erreur s'est produite. Merci de recommencer.")
-    return redirect(url_for('contents'))
+    return redirect(url_for('dashboard'))
 
 ###############################
 ########## Test ###############
