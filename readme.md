@@ -15,11 +15,7 @@ Start a server in production mode:
 
     FLASK_APP=run.py flask run
 
-## Questions
-
-- Comment protéger des informations essentielles ? => un fichier de configs qu'on peut après retrouver autrement sur le serveur.
-- Est-ce vraiment intéressant d'utiliser Flask Security dans notre cas ?
-- Pas de PATCH et PUT ??
+## TODO
 - Problème de couche alpha qui m'empêche d'arrondir les angles de la photo de profil.
 - FB share à tester en production
 
@@ -41,11 +37,6 @@ Start a server in production mode:
 - http://ondras.zarovi.cz/sql/demo/
 - https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-vi-profile-page-and-avatars
 - http://www.science-emergence.com/Articles/S%C3%A9lectionner-une-partie-dune-image-avec-PIL-de-python/
-
-## TODO
-
-- Ajouter du contenu dans dashboard/admin
-- $(...).jqBootstrapValidation is not a function ()
 
 Un blueprint se comporte comme une app sans être une app. Centraliser alors dans __init__().
 
