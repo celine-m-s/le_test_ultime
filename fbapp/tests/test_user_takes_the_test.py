@@ -21,29 +21,25 @@ from flask import Flask
 class TestUserTakesTheTest(LiveServerTestCase):
 
     def create_app(self):
-        # fbapp = Flask(__name__)
-        #
-        # # Config options - Make sure you created a 'config.py' file.
-        fbapp = Flask(__name__)
+        from .. import app
+        app.config.from_object('fbapp.tests.testing')
+        return app
 
-        fbapp.config.from_object('config')
-        return fbapp
-
-    # def setUp(self):
-    #     """Setup the test driver and create test users"""
-    #     self.driver = webdriver.Firefox()
-    #     self.driver.get(self.get_server_url())
-    #
+    def setUp(self):
+        """Setup the test driver and create test users"""
+        self.driver = webdriver.Firefox()
+        self.driver.get(self.get_server_url())
+    
     #     db.session.commit()
     #     db.drop_all()
     #     db.create_all()
     #
-    # def tearDown(self):
-    #     self.driver.quit()
+    def tearDown(self):
+        self.driver.quit()
 
     def test_server_is_up_and_running(self):
-        driver = webdriver.Firefox()
-        response = driver.get(self.get_server_url())
+        import urllib.request
+        response = urllib.request.urlopen(self.get_server_url())
         self.assertEqual(response.code, 200)
     #
     # def test_user_navigation(self):
