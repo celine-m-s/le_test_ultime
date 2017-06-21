@@ -27,12 +27,12 @@ class TestUserTakesTheTest(LiveServerTestCase):
         fbapp = Flask(__name__)
 
         fbapp.config.from_object('config')
-        return app
+        return fbapp
 
-    def setUp(self):
-        """Setup the test driver and create test users"""
-        self.driver = webdriver.Firefox()
-        self.driver.get(self.get_server_url())
+    # def setUp(self):
+    #     """Setup the test driver and create test users"""
+    #     self.driver = webdriver.Firefox()
+    #     self.driver.get(self.get_server_url())
     #
     #     db.session.commit()
     #     db.drop_all()
@@ -42,7 +42,8 @@ class TestUserTakesTheTest(LiveServerTestCase):
     #     self.driver.quit()
 
     def test_server_is_up_and_running(self):
-        response = self.driver.get(self.get_server_url())
+        driver = webdriver.Firefox()
+        response = driver.get(self.get_server_url())
         self.assertEqual(response.code, 200)
     #
     # def test_user_navigation(self):
