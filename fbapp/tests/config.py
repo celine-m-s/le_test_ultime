@@ -5,7 +5,9 @@ import os
 # >>> "".join([random.choice(string.printable) for _ in range(24)])
 SECRET_KEY = ";G(cVsHnI0XQCwLx/_dp=.:~"
 FB_APP_ID = 1967148823570310
-
+TESTING = True
+LIVESERVER_PORT = 8943
+LIVESERVER_TIMEOUT = 10
 # LOGIN
 SECURITY_PASSWORD_HASH = 'sha512_crypt'
 SECURITY_PASSWORD_SALT = 'fhasdgihwntlgy8f'
@@ -20,10 +22,9 @@ ADMIN_PW = 'supersuper'
 # Database settings
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
-SQLALCHEMY_DATABASE_URI_TEST = 'sqlite:///' + os.path.join(basedir, 'app_test.db')
+SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app_test.db')
 SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
 
 MAX_WORDS = 49
 
-BASE_URL = 'localhost:5000'
+BASE_URL = 'localhost:8943'
