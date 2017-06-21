@@ -6,8 +6,8 @@ from PIL import Image, ImageDraw, ImageOps, ImageFont
 from fbapp.models import Content
 from flask import url_for
 
-def find_content(sex):
-    contents = Content.query.filter(Content.sex == sex).all()
+def find_content(gender):
+    contents = Content.query.filter(Content.gender == gender).all()
     ids = [content.id for content in contents]
     the_one = Content.query.get(random.choice(ids))
     return the_one

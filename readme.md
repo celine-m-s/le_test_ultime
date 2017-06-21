@@ -44,8 +44,6 @@ Start a server in production mode:
 
 ## TODO
 
-- Il faudrait donner un nom à l'application pour renommer le répertoire `app` en quelque chose d'autre. Ex: `fbapp` ?
-- Il faudrait renommer "sex" en "gender". Je crois qu'en anglais, "sex" fait référence à l'acte, et pas au genre...
 - Ajouter du contenu dans dashboard/admin
 - $(...).jqBootstrapValidation is not a function ()
 

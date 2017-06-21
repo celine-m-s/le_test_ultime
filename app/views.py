@@ -33,11 +33,11 @@ def new_content():
     form = ContentForm()
     content = Content('A description', 'Male')
     if form.validate_on_submit():
-        c = Content(form.description.data, form.sex.data)
+        c = Content(form.description.data, form.gender.data)
         db.session.add(c)
         db.session.commit()
         flash('Une nouvelle description a été ajoutée avec succès ! Description : {} Sexe : {}'.format(
-            form.description.data, form.sex.data
+            form.description.data, form.gender.data
         ))
         return redirect(url_for('new_content', method='GET'))
 
@@ -47,7 +47,7 @@ def new_content():
                            method='POST',
                            form=form,
                            description=content.description,
-                           sex=content.sex)
+                           gender=content.gender)
 
 @app.route('/dashboard/contents')
 @login_required
@@ -63,11 +63,11 @@ def update_content(id):
     form = ContentForm()
     if form.validate_on_submit():
         content.description = form.description.data
-        content.sex = form.sex.data
+        content.gender = form.gender.data
         db.session.add(content)
         db.session.commit()
         flash('La description a bien été modifiée ! Description : {} Sexe : {}'.format(
-            form.description.data, form.sex.data
+            form.description.data, form.gender.data
         ))
         return redirect(url_for('contents'))
 
@@ -77,7 +77,7 @@ def update_content(id):
                            method='POST',
                            form=form,
                            description=content.description,
-                           sex=content.sex)
+                           gender=content.gender)
 
 @app.route('/dashboard/contents/<int:id>/delete')
 @login_required

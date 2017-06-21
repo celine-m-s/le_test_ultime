@@ -21,7 +21,7 @@
           <tr>
             <th>Id</th>
             <th>Description</th>
-            <th>Sex</th>
+            <th>Gender</th>
             <th></th>
           </tr>
         </thead>
@@ -30,7 +30,7 @@
           <tr>
             <th scope="row">{{ content.id }}</th>
             <td>{{ content.description }}</td>
-            <td>{{ content.sex }}</td>
+            <td>{{ content.gender }}</td>
             <td>
               <a href="{{ url_for('update_content', id=content.id) }}"><i class="fa fa-pencil-square-o"></i></a>
               <a href="{{ url_for('delete_content', id=content.id) }}"><i class="fa fa-trash-o"></i></a>

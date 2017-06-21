@@ -41,14 +41,14 @@ class Content(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String(200))
-    sex = db.Column('sex', db.Integer, nullable=False, default=GENDER_MALE)
+    gender = db.Column('gender', db.Integer, nullable=False, default=GENDER_MALE)
 
-    def __init__(self, description, sex):
+    def __init__(self, description, gender):
         self.description = description
-        self.sex = sex
+        self.gender = gender
 
-    def _get_sex(self):
-        return self.GENDERS[self.sex]
+    def _get_gender(self):
+        return self.GENDERS[self.gender]
 
 
 # Setup Flask-Security
