@@ -7,7 +7,7 @@ Initialize database:
 
 Re-running this method deletes all data. be careful!
 
-Start a server in debug mode: 
+Start a server in debug mode:
 
     python run.py
 
@@ -44,6 +44,17 @@ Start a server in production mode:
 
 ## TODO
 
-- Note que `run.py` fonctionnera toujours en mode debug. Ca risque d'être un problème pour le déploiement sur heroku, non ?
 - Il faudrait donner un nom à l'application pour renommer le répertoire `app` en quelque chose d'autre. Ex: `fbapp` ?
 - Il faudrait renommer "sex" en "gender". Je crois qu'en anglais, "sex" fait référence à l'acte, et pas au genre...
+- Ajouter du contenu dans dashboard/admin
+- $(...).jqBootstrapValidation is not a function ()
+
+Un blueprint se comporte comme une app sans être une app. Centraliser alors dans __init__().
+
+diff avec flask :
+- pas de blueprint dans Flask.
+- dans Flask, les vues et les URL sont au même endroit. Dans Django, on a un fichier url et pas un objet app.
+
+Flask :
+- pas qu'un serveur web ! un serveur web, c'est nginx et apache. nginx est très allégé (proxy). Y'a moyen de faire plein de choses côté serveur. Il peut faire des appels à une API. Récupérer des données depuis l'api pour répondre à une requête.
+- Dans django, pas jinja. C'est un système spécifique à Django. Macco c'est la folie ! Tu peux faire tout et n'importe quoi avec (très dur à déguguer).

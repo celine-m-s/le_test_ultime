@@ -11,6 +11,6 @@ models.db.init_app(fbapp)
 # Setup Flask-Security
 security = Security(fbapp, models.user_datastore)
 
-@app.cli.command()
+@fbapp.cli.command()
 def initdb():
     models.init_db(fbapp.config['ADMIN_EMAIL'], fbapp.config['ADMIN_PW'])

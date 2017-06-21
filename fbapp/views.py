@@ -11,8 +11,8 @@ fbapp = Flask(__name__)
 fbapp.config.from_object('config')
 # app.config.from_envvar('YOURAPPLICATION_SETTINGS')
 
-@app.route('/')
-@app.route('/index')
+@fbapp.route('/')
+@fbapp.route('/index')
 def index():
     description = "Toi, tu sais comment utiliser la console ! Jamais à court d'idées pour réaliser ton objectif, tu es déterminé-e et persévérant-e. Tes amis disent d'ailleurs volontiers que tu as du caractère et que tu ne te laisses pas marcher sur les pieds. Un peu hacker sur les bords, tu aimes trouver des solutions à tout problème. N'aurais-tu pas un petit problème d'autorité ? ;-)"
     return render_template('index.html', page_title='Le test ultime !',
@@ -22,12 +22,12 @@ def index():
                                          blur=True,
                                          description=description)
 
-@app.route('/dashboard')
+@fbapp.route('/dashboard')
 @login_required
 def dashboard():
     return render_template('admin/index.html')
 
-@app.route('/dashboard/contents/new', methods=['GET', 'POST'])
+@fbapp.route('/dashboard/contents/new', methods=['GET', 'POST'])
 @login_required
 def new_content():
     form = ContentForm()
@@ -49,14 +49,14 @@ def new_content():
                            description=content.description,
                            sex=content.sex)
 
-@app.route('/dashboard/contents')
+@fbapp.route('/dashboard/contents')
 @login_required
 def contents():
     all_contents = Content.query.all()
     total = len(all_contents)
     return render_template('contents/index.html', contents=all_contents, total=total)
 
-@app.route('/dashboard/contents/<int:id>/edit', methods=['GET', 'POST'])
+@fbapp.route('/dashboard/contents/<int:id>/edit', methods=['GET', 'POST'])
 @login_required
 def update_content(id):
     content = Content.query.get(id)
@@ -79,7 +79,7 @@ def update_content(id):
                            description=content.description,
                            sex=content.sex)
 
-@app.route('/dashboard/contents/<int:id>/delete')
+@fbapp.route('/dashboard/contents/<int:id>/delete')
 @login_required
 def delete_content(id):
     content = Content.query.get(id)
@@ -95,7 +95,7 @@ def delete_content(id):
 ########## Test ###############
 ###############################
 
-@app.route('/result')
+@fbapp.route('/result')
 def result():
     content = find_content(Content.GENDER_FEMALE)
     description = content.description

@@ -1,5 +1,5 @@
 #! /usr/bin/env python
-from app import app
+from fbapp import fbapp
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    fbapp.run(debug=True)
