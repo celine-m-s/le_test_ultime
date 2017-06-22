@@ -1,28 +1,28 @@
-from flask import Flask, render_template, url_for, request, redirect, flash, send_from_directory
+from flask import Flask, render_template, url_for, request, redirect, flash
 from flask_security import login_required
 
 from .models import db, Content
 from .forms import ContentForm
 from .utils import find_content, OpenGraphImage
 
-fbapp = Flask(__name__)
+app = Flask(__name__)
 
 # Config options - Make sure you created a 'config.py' file.
-fbapp.config.from_object('config')
+app.config.from_object('config')
 # app.config.from_envvar('YOURAPPLICATION_SETTINGS')
 
-@fbapp.route('/')
-@fbapp.route('/index')
+@app.route('/')
+@app.route('/index')
 def index():
     description = "Toi, tu sais comment utiliser la console ! Jamais à court d'idées pour réaliser ton objectif, tu es déterminé-e et persévérant-e. Tes amis disent d'ailleurs volontiers que tu as du caractère et que tu ne te laisses pas marcher sur les pieds. Un peu hacker sur les bords, tu aimes trouver des solutions à tout problème. N'aurais-tu pas un petit problème d'autorité ? ;-)"
     return render_template('index.html', page_title='Le test ultime !',
                                          user_image='static/img/profile.png',
                                          user_name='Julio',
-                                         fb_app_id=fbapp.config['FB_APP_ID'],
+                                         fb_app_id=app.config['FB_APP_ID'],
                                          blur=True,
                                          description=description)
 
-@fbapp.route('/dashboard')
+@app.route('/dashboard')
 @login_required
 def dashboard():
     all_contents = Content.query.all()
@@ -32,7 +32,7 @@ def dashboard():
                             total=total,
                             root_url=url_for('dashboard'))
 
-@fbapp.route('/dashboard/contents/new', methods=['GET', 'POST'])
+@app.route('/dashboard/contents/new', methods=['GET', 'POST'])
 @login_required
 def new_content():
     form = ContentForm()
@@ -55,7 +55,7 @@ def new_content():
                            gender=content.gender,
                            root_url=url_for('dashboard'))
 
-@fbapp.route('/dashboard/contents/<int:id>/edit', methods=['GET', 'POST'])
+@app.route('/dashboard/contents/<int:id>/edit', methods=['GET', 'POST'])
 @login_required
 def update_content(id):
     content = Content.query.get(id)
@@ -79,7 +79,7 @@ def update_content(id):
                            gender=content.gender,
                            root_url=url_for('dashboard'))
 
-@fbapp.route('/dashboard/contents/<int:id>/delete')
+@app.route('/dashboard/contents/<int:id>/delete')
 @login_required
 def delete_content(id):
     content = Content.query.get(id)
@@ -95,13 +95,13 @@ def delete_content(id):
 ########## Test ###############
 ###############################
 
-@fbapp.route('/result')
+@app.route('/result')
 def result():
     content = find_content(Content.GENDER_FEMALE)
     description = content.description
     first_name = request.args['first_name']
     uid = request.args['id']
-    base_url = fbapp.config['BASE_URL']
+    base_url = app.config['BASE_URL']
     profile_pic = 'http://graph.facebook.com/' + uid + '/picture?type=large'
     fb_img = OpenGraphImage(first_name, profile_pic, uid, description)
     og_image = base_url + fb_img.location
@@ -109,7 +109,7 @@ def result():
     return render_template('result.html', page_title='Voici qui je suis vraiment !', \
                                    user_image=fb_img.cover_location, \
                                    user_name=first_name, \
-                                   fb_app_id=fbapp.config['FB_APP_ID'], \
+                                   fb_app_id=app.config['FB_APP_ID'], \
                                    description=description, \
                                    og_image=og_image, \
                                    og_url=base_url, \
