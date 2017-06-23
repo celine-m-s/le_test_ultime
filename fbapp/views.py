@@ -20,7 +20,8 @@ def index():
                                          user_name='Julio',
                                          fb_app_id=app.config['FB_APP_ID'],
                                          blur=True,
-                                         description=description)
+                                         description=description,
+                                         test_env=app.testing)
 
 @app.route('/dashboard')
 @login_required
@@ -97,7 +98,8 @@ def delete_content(id):
 
 @app.route('/result')
 def result():
-    content = find_content(Content.GENDER_FEMALE)
+    gender = request.args['gender'] # returns male, female, other
+    content = find_content(gender)
     description = content.description
     first_name = request.args['first_name']
     uid = request.args['id']

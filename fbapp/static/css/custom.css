@@ -40,7 +40,7 @@ footer hr.star-light:after {
     margin-top: 34%;
   }
   h1 {
-    margin-top: 8%;
+    margin-top: 6%;
   }
 }
 
@@ -51,4 +51,8 @@ footer hr.star-light:after {
 
 .navbar-custom {
   padding: 10px;
+}
+
+header .container {
+  padding-top: 150px;
 }

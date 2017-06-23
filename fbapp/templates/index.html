@@ -19,7 +19,7 @@
           Connecte-toi à Facebook afin de connaître les résultats !
         </p>
         <p style="margin-top: 20px;">
-          <div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="true"></div>
+          <div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="true" data-use-continue-as="true" onlogin='checkLoginState()'></div>
         </p>
       </div>
     </div>
@@ -27,26 +27,24 @@
 </header>
 
 <div id="fb-root"></div>
+{% if test_env %}<div id="debug"></div>{% endif %}
 <script>
   // This is called with the results from from FB.getLoginStatus().
   function statusChangeCallback(response) {
     if (response.status === 'connected') {
-      console.log('ok');
-      var txt;
-      var r = confirm("Souhaitez-vous savoir qui vous êtes vraiment ?");
-      if (r == true) {
-          var id = response.id;
-          var url = '/result?first_name=' + response.first_name + '&id=' + id;
-          window.response = response
-          callAPI()
-      }
-    } else {
-      // The person is not logged into our app or Facebook is unable to tell.
-      document.getElementById('status').innerHTML = 'Please log ' + 'into this app.';
-      FB.login(function(response) {
-        window.response = response
-      }, {scope: 'public_profile'});
       callAPI();
+    }
+  }
+
+  // This function is called when someone finishes with the Login
+  // Button.
+  var counter = 0;
+  function checkLoginState() {
+    counter += 1
+    if (counter == 1) {
+      FB.getLoginStatus(function(response) {
+        statusChangeCallback(response);
+      });
     }
   }
 
@@ -61,6 +59,7 @@
 
     FB.getLoginStatus(function(response) {
       statusChangeCallback(response);
+      {% if test_env %}$('#debug').append('<fblogin></fblogin>');{% endif %}
     });
   };
 
@@ -74,11 +73,10 @@
 
   function callAPI() {
     console.log('Welcome! Fetching your information.... ');
-    FB.api('/me', {fields: 'id, first_name'}, function(response) {
+    FB.api('/me', {fields: 'id, first_name, gender'}, function(response) {
       console.log('Successful login for: ' + response.first_name);
-      var id = response.id;
-      var url = '/result?first_name=' + response.first_name + '&id=' + id;
-      window.location.replace(url);
+      var url = window.location.href + 'result?first_name=' + response.first_name + '&id=' + response.id + '&gender=' + response.gender;
+      window.location.href = url;
     });
   }
 </script>

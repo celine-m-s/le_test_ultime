@@ -28,3 +28,10 @@ SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
 MAX_WORDS = 49
 
 BASE_URL = 'localhost:8943'
+
+FB_USER = 'Tom Hanks'
+FB_FIRST_NAME = 'Tom'
+FB_PASSWORD = 'vendredi'
+FB_EMAIL = 'tom_orfxthk_hanks@tfbnw.net'
+
+DEBUG = True
