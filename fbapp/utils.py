@@ -7,7 +7,7 @@ from fbapp.models import Content
 from flask import url_for
 
 def find_content(gender):
-    contents = Content.query.filter(Content.gender == gender).all()
+    contents = Content.query.filter(Content.gender == Content.GENDERS[gender]).all()
     ids = [content.id for content in contents]
     the_one = Content.query.get(random.choice(ids))
     return the_one
