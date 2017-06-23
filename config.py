@@ -21,8 +21,14 @@ ADMIN_PW = 'supersuper'
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 # SQLALCHEMY_DATABASE_URI = "postgresql://celinems:yourpassword@localhost/letestultime"
-SQLALCHEMY_DATABASE_URI = 'postgresql://localhost/letestultime'
+# SQLALCHEMY_DATABASE_URI = 'postgresql://localhost/letestultime'
+# import pdb; pdb.set_trace()
 SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
 MAX_WORDS = 49
 
 BASE_URL = 'localhost:5000'
+
+if os.environ.get('DATABASE_URL') is None:
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://celinems@localhost/letestultime'
+else:
+    SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
