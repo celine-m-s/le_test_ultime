@@ -20,10 +20,9 @@ ADMIN_PW = 'supersuper'
 # Database settings
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
-SQLALCHEMY_DATABASE_URI_TEST = 'sqlite:///' + os.path.join(basedir, 'app_test.db')
+# SQLALCHEMY_DATABASE_URI = "postgresql://celinems:yourpassword@localhost/letestultime"
+SQLALCHEMY_DATABASE_URI = 'postgresql://localhost/letestultime'
 SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
-
 MAX_WORDS = 49
 
 BASE_URL = 'localhost:5000'
