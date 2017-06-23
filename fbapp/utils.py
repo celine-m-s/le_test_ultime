@@ -2,9 +2,12 @@ import os
 import random
 import urllib.request as urllib
 import io
-from PIL import Image, ImageDraw, ImageOps, ImageFont
-from fbapp.models import Content
+import logging as lg
 from flask import url_for
+
+from PIL import Image, ImageDraw, ImageOps, ImageFont
+
+from fbapp.models import Content
 
 def find_content(gender):
     contents = Content.query.filter(Content.gender == Content.GENDERS[gender]).all()
@@ -16,7 +19,9 @@ class OpenGraphImage:
 
     def __init__(self, first_name, profile_path, uid, description):
         self.location = self._location(uid)
+        lg.info(self.location)
         self.cover_location = self._cover_location(uid)
+        lg.info(self.cover_location)
 
         background = self.base()
         img = self.to_img(profile_path)
@@ -26,7 +31,6 @@ class OpenGraphImage:
         # with_corners = self.add_corners(cropped)
         # air = background.paste(ok, (300, 100, ok.width+500, ok.height+100))
         self.print_on_img(background, first_name.capitalize(), 70, (450, 50))
-        description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
 
         # Make sentences of 7 words from description
         sentence_length = 7
