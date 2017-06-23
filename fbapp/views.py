@@ -103,7 +103,7 @@ def result():
     description = content.description
     first_name = request.args['first_name']
     uid = request.args['id']
-    base_url = app.config['SERVER_NAME']
+    base_url = app.config['BASE_URL']
     profile_pic = 'http://graph.facebook.com/' + uid + '/picture?type=large'
     fb_img = OpenGraphImage(first_name, profile_pic, uid, description)
     og_image = base_url + fb_img.location

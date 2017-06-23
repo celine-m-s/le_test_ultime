@@ -24,9 +24,11 @@ SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
 MAX_WORDS = 49
 
 if os.environ.get('DATABASE_URL') is None:
-    SERVER_NAME = 'localhost:5000'
+    # SERVER_NAME = 'localhost:5000'
+    BASE_URL = 'localhost:5000'
     SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://celinems@localhost/letestultime'
 else:
     SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
-    SERVER_NAME = 'https://le-test-ultime.herokuapp.com'
+    # SERVER_NAME = 'le-test-ultime.herokuapp.com'
+    BASE_URL = 'https://le-test-ultime.herokuapp.com'
     DEBUG = True
