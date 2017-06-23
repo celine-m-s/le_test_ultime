@@ -31,4 +31,4 @@ else:
     SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
     # SERVER_NAME = 'le-test-ultime.herokuapp.com'
     BASE_URL = 'https://le-test-ultime.herokuapp.com'
-    DEBUG = True
+    # DEBUG = True

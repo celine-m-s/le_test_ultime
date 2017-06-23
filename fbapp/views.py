@@ -14,14 +14,24 @@ app.config.from_object('config')
 @app.route('/')
 @app.route('/index')
 def index():
+    if 'img' in request.args.keys():
+        og_image = request.args['img']
+        share_link = url_for('index', img=og_image, _external=True)
+    else:
+        og_image = url_for('static', filename='tmp/sample.jpg', _external=True)
+        share_link = url_for('index', _external=True)
+
     description = "Toi, tu sais comment utiliser la console ! Jamais à court d'idées pour réaliser ton objectif, tu es déterminé-e et persévérant-e. Tes amis disent d'ailleurs volontiers que tu as du caractère et que tu ne te laisses pas marcher sur les pieds. Un peu hacker sur les bords, tu aimes trouver des solutions à tout problème. N'aurais-tu pas un petit problème d'autorité ? ;-)"
+    og_description = 'Tu veux savoir qui tu es vraiment ? Fais le test ultime !'
     return render_template('index.html', page_title='Le test ultime !',
                                          user_image='static/img/profile.png',
                                          user_name='Julio',
                                          fb_app_id=app.config['FB_APP_ID'],
                                          blur=True,
                                          description=description,
-                                         test_env=app.testing)
+                                         og_url=share_link,
+                                         og_image=og_image,
+                                         og_description=og_description)
 
 @app.route('/dashboard')
 @login_required
@@ -56,10 +66,10 @@ def new_content():
                            gender=content.gender,
                            root_url=url_for('dashboard'))
 
-@app.route('/dashboard/contents/<int:id>/edit', methods=['GET', 'POST'])
+@app.route('/dashboard/contents/<int:uid>/edit', methods=['GET', 'POST'])
 @login_required
-def update_content(id):
-    content = Content.query.get(id)
+def update_content(uid):
+    content = Content.query.get(uid)
     form = ContentForm()
     if form.validate_on_submit():
         content.description = form.description.data
@@ -72,7 +82,7 @@ def update_content(id):
         return redirect(url_for('dashboard'))
 
     return render_template('contents/form.html',
-                           path=url_for('update_content', id=id),
+                           path=url_for('update_content', id=uid),
                            title='Mise à jour',
                            method='POST',
                            form=form,
@@ -103,10 +113,12 @@ def result():
     description = content.description
     first_name = request.args['first_name']
     uid = request.args['id']
-    base_url = app.config['BASE_URL']
     profile_pic = 'http://graph.facebook.com/' + uid + '/picture?type=large'
     fb_img = OpenGraphImage(first_name, profile_pic, uid, description)
-    og_image = base_url + fb_img.location
+    og_image = fb_img.location
+    share_link = url_for('index',
+                        img=fb_img.location,
+                        _external=True)
 
     return render_template('result.html', page_title='Voici qui je suis vraiment !', \
                                    user_image=fb_img.cover_location, \
@@ -114,5 +126,5 @@ def result():
                                    fb_app_id=app.config['FB_APP_ID'], \
                                    description=description, \
                                    og_image=og_image, \
-                                   og_url=base_url, \
+                                   og_url=share_link, \
                                    og_description='Toi aussi, fais le test !')
