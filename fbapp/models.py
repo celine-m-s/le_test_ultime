@@ -30,18 +30,19 @@ class User(db.Model, UserMixin):
 
 
 class Content(db.Model):
-    GENDER_FEMALE = 0
-    GENDER_MALE = 1
-    GENDER_OTHER = 2
+    GENDER_FEMALE = 'female'
+    GENDER_MALE = 'male'
+    GENDER_OTHER = 'other'
     GENDERS = {
-        GENDER_FEMALE: "Female",
-        GENDER_MALE: "Male",
-        GENDER_OTHER: "Other"
+        GENDER_FEMALE: 0,
+        GENDER_MALE: 1,
+        GENDER_OTHER: 2
     }
+
 
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String(200))
-    gender = db.Column('gender', db.Integer, nullable=False, default=GENDER_MALE)
+    gender = db.Column('gender', db.Integer, nullable=False, default=GENDERS[GENDER_FEMALE])
 
     def __init__(self, description, gender):
         self.description = description
