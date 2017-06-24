@@ -4,7 +4,6 @@ import os
 # >>> import random, string
 # >>> "".join([random.choice(string.printable) for _ in range(24)])
 SECRET_KEY = ";G(cVsHnI0XQCwLx/_dp=.:~"
-FB_APP_ID = 1967148823570310
 
 # LOGIN
 SECURITY_PASSWORD_HASH = 'sha512_crypt'
@@ -23,12 +22,13 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
 MAX_WORDS = 49
 
+# local
 if os.environ.get('DATABASE_URL') is None:
-    # SERVER_NAME = 'localhost:5000'
     BASE_URL = 'localhost:5000'
     SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://celinems@localhost/letestultime'
+    FB_APP_ID = 1200420960103822
+# heroku
 else:
     SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
-    # SERVER_NAME = 'le-test-ultime.herokuapp.com'
     BASE_URL = 'https://le-test-ultime.herokuapp.com'
-    # DEBUG = True
+    FB_APP_ID = 1967148823570310
