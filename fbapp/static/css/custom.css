@@ -36,7 +36,7 @@ footer hr.star-light:after {
 }
 
 @media (min-width: 768px) {
-  .card #user-name {
+  .card #user_name {
     margin-top: 34%;
   }
   h1 {
