@@ -1,4 +1,16 @@
+## TODO
 
+[] Secure config.py
+  [] Secret key
+  [] admin email
+  [] admin password
+[] Description content x 20
+[] Fill database with content
+[] Image generation: round corners
+[] Tests:
+  [] Test image generation
+  [] Test FB share
+  [] Test FB metadata
 
 ## Run the program
 
@@ -17,9 +29,3 @@ Start a server in debug mode:
 Start a server in production mode:
 
     FLASK_APP=run.py flask run
-
-## TODO
-- Problème de couche alpha qui m'empêche d'arrondir les angles de la photo de profil.
-- FB share à tester en production
-- tests
-- production
