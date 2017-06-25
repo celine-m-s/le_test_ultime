@@ -1,26 +1,16 @@
 ## TODO
 
-[ ] Secure config.py
-
-  [ ] Secret key
-
-  [ ] admin email
-
-  [ ] admin password
-
-[] Description content x 20
-
-[] Fill database with content
-
-[] Image generation: round corners
-
-[] Tests:
-
-  [] Test image generation
-
-  [] Test FB share
-
-  [] Test FB metadata
+- [ ] Secure config.py
+  - [ ] Secret key
+  - [ ] admin email
+  - [ ] admin password
+- [ ] Description content x 20
+- [ ] Fill database with content
+- [ ] Image generation: round corners
+- [ ] Tests:
+  - [ ] Test image generation
+  - [ ] Test FB share
+  - [ ] Test FB metadata
 
 ## Run the program
 
