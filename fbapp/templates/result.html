@@ -1,13 +1,5 @@
 {% extends 'base.html' %}
 
-{% block open_graph %}
-<meta property="og:title" content="{{ page_title }}" />
-<meta property="og:type" content="image/jpeg" />
-<meta property="og:url" content="{{ og_url }}" />
-<meta property="og:image" content="{{ og_image }}" />
-<meta property="og:description" content="{{ og_description }}" />
-{% endblock %}
-
 {% block content %}
   <header>
       <div class="container" id="maincontent" tabindex="-1">
@@ -50,7 +42,7 @@
     $('#FbShare').click(function(){
       FB.ui({
         method: 'share',
-        href: window.location.href,
+        href: '{{ og_url }}'
       }, function(response){});
     });
   </script>

@@ -11,28 +11,31 @@ app = Flask(__name__)
 app.config.from_object('config')
 
 @app.route('/')
-@app.route('/index')
+@app.route('/index/')
 def index():
     if 'img' in request.args.keys():
-        og_image = request.args['img']
-        share_link = url_for('index', img=og_image, _external=True)
+        img = request.args['img']
+        og_url = url_for('index', img=img, _external=True)
+        og_image = url_for('static', filename=img, _external=True)
     else:
+        og_url = url_for('index', _external=True)
         og_image = url_for('static', filename='tmp/sample.jpg', _external=True)
-        share_link = url_for('index', _external=True)
 
-    description = "Toi, tu sais comment utiliser la console ! Jamais à court d'idées pour réaliser ton objectif, tu es déterminé-e et persévérant-e. Tes amis disent d'ailleurs volontiers que tu as du caractère et que tu ne te laisses pas marcher sur les pieds. Un peu hacker sur les bords, tu aimes trouver des solutions à tout problème. N'aurais-tu pas un petit problème d'autorité ? ;-)"
-    og_description = 'Tu veux savoir qui tu es vraiment ? Fais le test ultime !'
+    description = """
+        Toi, tu sais comment utiliser la console ! Jamais à court d'idées pour réaliser ton objectif, tu es déterminé-e et persévérant-e. Tes amis disent d'ailleurs volontiers que tu as du caractère et que tu ne te laisses pas marcher sur les pieds. Un peu hacker sur les bords, tu aimes trouver des solutions à tout problème. N'aurais-tu pas un petit problème d'autorité ? ;-)
+    """
+
+    og_description = "Tu veux savoir qui tu es vraiment ? Fais le test ultime !"
     return render_template('index.html', page_title='Le test ultime !',
-                                         user_image='static/img/profile.png',
-                                         user_name='Julio',
-                                         fb_app_id=app.config['FB_APP_ID'],
+                                         user_image=url_for('static', filename='img/profile.png'),
+                                         user_name='Julio',,
                                          blur=True,
                                          description=description,
-                                         og_url=share_link,
+                                         og_url=og_url,
                                          og_image=og_image,
                                          og_description=og_description)
 
-@app.route('/dashboard')
+@app.route('/dashboard/')
 @login_required
 def dashboard():
     all_contents = Content.query.all()
@@ -42,7 +45,7 @@ def dashboard():
                             total=total,
                             root_url=url_for('dashboard'))
 
-@app.route('/dashboard/contents/new', methods=['GET', 'POST'])
+@app.route('/dashboard/contents/new/', methods=['GET', 'POST'])
 @login_required
 def new_content():
     form = ContentForm()
@@ -65,7 +68,7 @@ def new_content():
                            gender=content.gender,
                            root_url=url_for('dashboard'))
 
-@app.route('/dashboard/contents/<int:uid>/edit', methods=['GET', 'POST'])
+@app.route('/dashboard/contents/<int:uid>/edit/', methods=['GET', 'POST'])
 @login_required
 def update_content(uid):
     content = Content.query.get(uid)
@@ -89,7 +92,7 @@ def update_content(uid):
                            gender=content.gender,
                            root_url=url_for('dashboard'))
 
-@app.route('/dashboard/contents/<int:id>/delete')
+@app.route('/dashboard/contents/<int:id>/delete/')
 @login_required
 def delete_content(id):
     content = Content.query.get(id)
@@ -105,9 +108,9 @@ def delete_content(id):
 ########## Test ###############
 ###############################
 
-@app.route('/result')
+@app.route('/result/')
 def result():
-    gender = request.args['gender'] # returns male, female, other
+    gender = request.args['gender'] # returns male, female, other value
     content = find_content(gender)
     description = content.description
     first_name = request.args['first_name']
@@ -119,11 +122,11 @@ def result():
                         img=fb_img.location,
                         _external=True)
 
-    return render_template('result.html', page_title='Voici qui je suis vraiment !', \
-                                   user_image=fb_img.cover_location, \
-                                   user_name=first_name, \
-                                   fb_app_id=app.config['FB_APP_ID'], \
-                                   description=description, \
-                                   og_image=og_image, \
-                                   og_url=share_link, \
-                                   og_description='Toi aussi, fais le test !')
+    return render_template('result.html',
+                            page_title='Voici qui je suis vraiment !', \
+                            user_image=fb_img.cover_location, \
+                            user_name=first_name, \
+                            description=description, \
+                            og_image=og_image, \
+                            og_url=share_link, \
+                            og_description='Toi aussi, fais le test !')
