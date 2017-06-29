@@ -47,10 +47,10 @@ class OpenGraphImage:
         return os.path.join('fbapp', 'static', 'tmp', '{}{}.jpg'.format(pre, uid))
 
     def _location(self, uid):
-        return url_for('static', filename='tmp/{}.jpg'.format(uid), _external=True)
+        return url_for('static', filename='tmp/{}.jpg'.format(uid))
 
     def _cover_location(self, uid):
-        return url_for('static', filename='tmp/cover_{}.jpg'.format(uid), _external=True)
+        return url_for('static', filename='tmp/cover_{}.jpg'.format(uid))
 
     def base(self):
         img = Image.new('RGB', (1200, 630), '#18BC9C')

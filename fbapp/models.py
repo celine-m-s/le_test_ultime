@@ -48,9 +48,6 @@ class Content(db.Model):
         self.description = description
         self.gender = gender
 
-    def _get_gender(self):
-        return self.GENDERS[self.gender]
-
 
 # Setup Flask-Security
 user_datastore = SQLAlchemyUserDatastore(db, User, Role)

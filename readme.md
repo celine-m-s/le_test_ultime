@@ -29,3 +29,9 @@ Start a server in debug mode:
 Start a server in production mode:
 
     FLASK_APP=run.py flask run
+
+Start a Flask shell:
+    FLASK_APP=run.py flask
+
+[Basic writing in markdown](https://help.github.com/articles/basic-writing-and-formatting-syntax/)
+[Emoji Cheat sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet/)

@@ -18,14 +18,13 @@ ADMIN_PW = 'supersuper'
 
 # Database settings
 basedir = os.path.abspath(os.path.dirname(__file__))
-
-SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
 MAX_WORDS = 49
 
 # local
 if os.environ.get('DATABASE_URL') is None:
     BASE_URL = 'localhost:5000'
-    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://celinems@localhost/letestultime'
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
+    #SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://celinems@localhost/letestultime'
     FB_APP_ID = 1200420960103822
 # heroku
 else:
