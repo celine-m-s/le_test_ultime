@@ -118,13 +118,14 @@ def result():
     profile_pic = 'http://graph.facebook.com/' + uid + '/picture?type=large'
     fb_img = OpenGraphImage(first_name, profile_pic, uid, description)
     og_image = fb_img.location
+    user_image = url_for('static', filename=fb_img.cover_location)
     share_link = url_for('index',
                         img=fb_img.location,
                         _external=True)
 
     return render_template('result.html',
                             page_title='Voici qui je suis vraiment !', \
-                            user_image=fb_img.cover_location, \
+                            user_image=user_image, \
                             user_name=first_name, \
                             description=description, \
                             og_image=og_image, \

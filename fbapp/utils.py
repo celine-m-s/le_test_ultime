@@ -2,46 +2,44 @@ import os
 import random
 import urllib.request as urllib
 import io
-import logging as lg
-from flask import url_for
+import textwrap
 
-from PIL import Image, ImageDraw, ImageOps, ImageFont
+from PIL import Image, ImageDraw, ImageFont
 
 from fbapp.models import Content
 
 def find_content(gender):
     contents = Content.query.filter(Content.gender == Content.GENDERS[gender]).all()
-    ids = [content.id for content in contents]
-    the_one = Content.query.get(random.choice(ids))
-    return the_one
+    return random.choice(contents)
 
 class OpenGraphImage:
 
     def __init__(self, first_name, profile_path, uid, description):
         self.location = self._location(uid)
-        lg.info(self.location)
         self.cover_location = self._cover_location(uid)
-        lg.info(self.cover_location)
 
         background = self.base()
+
+        # Print first_name
+        self.print_on_img(background, first_name.capitalize(), 70, 50)
+
+        # Print description
+        sentences = textwrap.wrap(description, width=60)
+        current_h, pad = 180, 10
+
+        for sentence in sentences:
+            w, h = self.print_on_img(background, sentence, 40, current_h)
+            current_h += h + pad
+
+        background.save(self._path(uid))
+
+        # Profile image
         img = self.to_img(profile_path)
         cropped = self.crop_image(img)
         cropped.resize((100, 100))
         cropped.save(self._path(uid, 'cover_'))
         # with_corners = self.add_corners(cropped)
         # air = background.paste(ok, (300, 100, ok.width+500, ok.height+100))
-        self.print_on_img(background, first_name.capitalize(), 70, (450, 50))
-
-        # Make sentences of 7 words from description
-        sentence_length = 7
-        words = description.split()
-        for i in range(0, len(words), sentence_length):
-            sentence = ' '.join(words[i:i+sentence_length])
-            top = 200 + i*40/sentence_length
-            left = 100
-            self.print_on_img(background, sentence, 40, (left, top))
-
-        background.save(self._path(uid))
 
     def _path(self, uid, pre=''):
         return os.path.join('fbapp', 'static', 'tmp', '{}{}.jpg'.format(pre, uid))
@@ -50,11 +48,10 @@ class OpenGraphImage:
         return 'tmp/{}.jpg'.format(uid)
 
     def _cover_location(self, uid):
-        return url_for('static', filename='tmp/cover_{}.jpg'.format(uid))
+        return 'tmp/cover_{}.jpg'.format(uid)
 
     def base(self):
         img = Image.new('RGB', (1200, 630), '#18BC9C')
-        # img.save(self.path, 'JPEG')
         return img
 
     def to_img(self, path):
@@ -69,11 +66,13 @@ class OpenGraphImage:
         box = (left_margin, top_margin, size + left_margin, size + top_margin)
         return pic.crop(box)
 
-    def print_on_img(self, img, text, size, position):
+    def print_on_img(self, img, text, size, height):
         font = ImageFont.truetype(os.path.join('fbapp', 'static', 'fonts', 'Arcon-Regular.otf'), size)
         draw = ImageDraw.Draw(img)
+        w, h = draw.textsize(text, font)
+        position = ((img.width - w) / 2, height)
         draw.text(position, text, (255, 255, 255), font=font)
-        return img
+        return (w, h)
 
     # Not working for the moment
     # def add_corners(self, image):
