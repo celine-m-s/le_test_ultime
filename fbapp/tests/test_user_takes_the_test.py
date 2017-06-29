@@ -101,7 +101,8 @@ class TestUserTakesTheTest(LiveServerTestCase):
         self.driver.get(self.result_page)
         shown_desc = self.get_el('#description').text
         db_desc = models.Content.query.filter(models.Content.description == shown_desc).all()
-        assert db_desc[0].gender == 'male'
+        # fiw this so we can have `male` instead
+        assert db_desc[0].gender == 1
 
     def test_result_page_img(self):
         # Check that an image is displayed for this user
