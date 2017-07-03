@@ -1,33 +1,16 @@
-import pytest
 from flask_testing import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 import selenium.webdriver.support.ui as ui
 
-from flask import Flask
-
 from .. import app
 from .. import models
-
-class TestSelenium:
-
-    def test_it_works(self):
-        driver = webdriver.Firefox()
-        driver.get("http://www.python.org")
-        assert "Python" in driver.title
-        elem = driver.find_element_by_name("q")
-        elem.clear()
-        elem.send_keys("pycon")
-        elem.send_keys(Keys.RETURN)
-        assert "No results found." not in driver.page_source
-        driver.close()
 
 class TestUserTakesTheTest(LiveServerTestCase):
 
     def create_app(self):
-        app.config.from_object('fbapp.tests.testing')
-        app.config.debug = True
+        app.config.from_object('fbapp.tests.config')
         return app
 
     def setUp(self):
@@ -35,19 +18,10 @@ class TestUserTakesTheTest(LiveServerTestCase):
         self.driver = webdriver.Firefox()
         self.result_page = self.get_server_url() + '/result?first_name=Tom&id=111823112767411&gender=male'
         models.init_db(app.config['ADMIN_EMAIL'], app.config['ADMIN_PW'])
-        self.wait = ui.WebDriverWait(self.driver,1000)
+        self.wait = ui.WebDriverWait(self.driver, 1000)
 
     def tearDown(self):
         self.driver.quit()
-
-    # def test_server_is_up_and_running(self):
-    #     import urllib.request
-    #     response = urllib.request.urlopen(self.get_server_url())
-    #     self.assertEqual(response.code, 200)
-    #
-    # def test_title_navigation(self):
-    #     self.driver.get(self.get_server_url())
-    #     assert "Le test ultime !" in self.driver.title
 
     def get_el(self, selector):
         return self.driver.find_element_by_css_selector(selector)
@@ -59,10 +33,7 @@ class TestUserTakesTheTest(LiveServerTestCase):
 
     def clicks_on_login(self):
         button = self.get_el(".fb-login-button")
-        # Wait for FB to be initialized
-        # import pdb; pdb.set_trace()
         self.wait.until(lambda driver: self.driver.find_element_by_tag_name("iframe").is_displayed())
-        # import pdb; pdb.set_trace()
         ActionChains(self.driver).click(button).perform()
 
     def sees_login_page(self):

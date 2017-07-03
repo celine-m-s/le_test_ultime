@@ -5,6 +5,7 @@ import os
 # >>> "".join([random.choice(string.printable) for _ in range(24)])
 SECRET_KEY = ";G(cVsHnI0XQCwLx/_dp=.:~"
 FB_APP_ID = 1967148823570310
+DEBUG = True
 TESTING = True
 LIVESERVER_PORT = 8943
 LIVESERVER_TIMEOUT = 10
