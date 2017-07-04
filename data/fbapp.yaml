@@ -7,4 +7,22 @@ content:
       Tu es hyper dynamique ! Toujours partant pour une sortie ou un déjeuner, rien de t'arrête. Attention à ne pas t'épuiser !
   - gender: 'other'
     description: >
-      Tu es hyper dynamique ! Toujours partant-e pour une sortie ou un déjeuner, rien de t'arrête. Attention à ne pas t'épuiser ! 
+      Tu es hyper dynamique ! Toujours partant-e pour une sortie ou un déjeuner, rien de t'arrête. Attention à ne pas t'épuiser !
+  - gender: 'female'
+    description: >
+      Jamais à court d'idées pour réaliser ton objectif, tu es déterminée et persévérante. Tes amis disent d'ailleurs volontiers que tu as du caractère et que tu ne te laisses pas marcher sur les pieds. Un peu hacker sur les bords, tu aimes trouver des solutions à tout problème. N'aurais-tu pas un petit problème d'autorité ? ;-)
+  - gender: 'male'
+    description: >
+      Jamais à court d'idées pour réaliser ton objectif, tu es déterminé et persévérant. Tes amis disent d'ailleurs volontiers que tu as du caractère et que tu ne te laisses pas marcher sur les pieds. Un peu hacker sur les bords, tu aimes trouver des solutions à tout problème. N'aurais-tu pas un petit problème d'autorité ? ;-)
+  - gender: 'other'
+    description: >
+      Jamais à court d'idées pour réaliser ton objectif, tu es déterminé-e et persévérant-e. Tes amis disent d'ailleurs volontiers que tu as du caractère et que tu ne te laisses pas marcher sur les pieds. Un peu hacker sur les bords, tu aimes trouver des solutions à tout problème. N'aurais-tu pas un petit problème d'autorité ? ;-)
+  - gender: 'female'
+    description: >
+      Toi, tu n'as jamais peur d'être seule ! Les grands espaces et les aventures sont faits pour toi. D'ailleurs, Koh Lanta est ton émission préférée ! Bientôt tu partiras les cheveux au vent sur ton radeau. Tu es aussi une idéaliste chevronnée. Quelle chance !
+  - gender: 'male'
+    description: >
+      Toi, tu n'as pas peur d'être seul ! Les grands espaces et les aventures sont faits pour toi. D'ailleurs, Koh Lanta est ton émission préférée ! Bientôt tu partiras les cheveux au vent sur ton radeau. Tu es aussi un idéaliste chevronné. Quelle chance !
+  - gender: 'other'
+    description: >
+      Toi, tu n'as pas peur d'être seul-e ! Les grands espaces et les aventures sont faits pour toi. D'ailleurs, Koh Lanta est ton émission préférée ! Bientôt tu partiras les cheveux au vent sur ton radeau. Tu es aussi un-e idéaliste chevronné-e. Quelle chance !
