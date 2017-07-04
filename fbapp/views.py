@@ -1,7 +1,7 @@
 from flask import Flask, render_template, url_for, request, redirect, flash
 from flask_security import login_required
 
-from .models import db, Content
+from .models import db, Content, Genders
 from .forms import ContentForm
 from .utils import find_content, OpenGraphImage
 
@@ -13,7 +13,7 @@ app.config.from_object('config')
 @app.route('/')
 @app.route('/index/')
 def index():
-    if 'img' in request.args.keys():
+    if 'img' in request.args:
         img = request.args['img']
         og_url = url_for('index', img=img, _external=True)
         og_image = url_for('static', filename=img, _external=True)
@@ -110,11 +110,13 @@ def delete_content(id):
 
 @app.route('/result/')
 def result():
-    gender = request.args['gender'] # returns male, female, other value
+    gender = request.args.get('gender')
+    if gender not in Genders.__members__:
+        gender = Genders.other
     content = find_content(gender)
     description = content.description
-    first_name = request.args['first_name']
-    uid = request.args['id']
+    first_name = request.args.get('first_name')
+    uid = request.args.get('id')
     profile_pic = 'http://graph.facebook.com/' + uid + '/picture?type=large'
     fb_img = OpenGraphImage(first_name, profile_pic, uid, description)
     og_image = fb_img.location

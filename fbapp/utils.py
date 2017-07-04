@@ -6,10 +6,11 @@ import textwrap
 
 from PIL import Image, ImageDraw, ImageFont
 
-from fbapp.models import Content
+from fbapp.models import Content, Genders
 
+# S'il n'y a pas d'élément dans la table Content, find_content va planter.
 def find_content(gender):
-    contents = Content.query.filter(Content.gender == Content.GENDERS[gender]).all()
+    contents = Content.query.filter(Content.gender == Genders[gender]).all()
     return random.choice(contents)
 
 class OpenGraphImage:
