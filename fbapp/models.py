@@ -65,6 +65,8 @@ def init_db(admin_email, admin_password):
         data = yaml.load(file)
         contents = data['content']
         for item in contents:
-            db.session.add(Content(item['description'], Genders[item['gender']]))
+            description = item['description'].replace('\n', '')
+            gender = item['gender'].replace('\n', '')
+            db.session.add(Content(description, Genders[gender]))
     lg.info('Database created!')
     db.session.commit()
