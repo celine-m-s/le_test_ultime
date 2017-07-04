@@ -4,7 +4,8 @@
   - [x] Secret key
   - [x] admin email
   - [x] admin password
-  - sample config.py.sample then update readme
+  - [x] sample config.py.sample then update readme
+- [x] Descriptions from a YAML file
 - [ ] Description content x 20
 - [ ] Fill database with content
 - [ ] Image generation: round corners
@@ -12,6 +13,12 @@
   - [ ] Test image generation
   - [ ] Test FB share
   - [ ] Test FB metadata
+
+Another stupid Facebook app which will tell you who you are truly.
+
+![This is how it looks like](https://raw.githubusercontent.com/celine-m-s/flask_test_app/master/animation.gif)
+
+Written in French but feel free to make a pull request to translate it into another language. We all want to know who we are!
 
 ## Start the program
 
