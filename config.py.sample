@@ -1,0 +1,29 @@
+"""
+Sample config file for your personal use.
+Create your own by replacing all data with yours.
+Be careful not to submit it with your pull request!
+"""
+import os
+
+# To generate a new secret key:
+# >>> import random, string
+# >>> "".join([random.choice(string.printable) for _ in range(24)])
+SECRET_KEY = os.environ.get('SECRET_KEY', ";G(cVsHnI0XQCwLx/_dp=.:~")
+
+# Login settings
+SECURITY_PASSWORD_HASH = 'bcrypt'
+SECURITY_PASSWORD_SALT = os.environ.get('SECURITY_PASSWORD_SALT', '')
+SECURITY_POST_LOGIN_VIEW = '/dashboard'
+
+WTF_CSRF_ENABLED = True
+
+# Administration area
+ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', '')
+ADMIN_PW = os.environ.get('ADMIN_PW', '')
+
+# Database settings
+basedir = os.path.abspath(os.path.dirname(__file__))
+SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', 'sqlite:///' + os.path.join(basedir, 'app.db'))
+
+# Facebook
+FB_APP_ID = os.environ.get('FB_APP_ID', '')
