@@ -1,6 +1,6 @@
 ## TODO
 
-Another stupid Facebook app which will tell you who you are truly.
+Another stupid Facebook app which will tell you who you truly are.
 
 ![This is how it looks like](https://raw.githubusercontent.com/celine-m-s/flask_test_app/master/animation.gif)
 
