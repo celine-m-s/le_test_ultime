@@ -65,6 +65,7 @@ class TestUserTakesTheTest(LiveServerTestCase):
         self.wait.until(lambda driver: len(self.driver.window_handles) == 1)
         # Wait for the redirection to be completed
         self.wait.until(lambda driver: '?' in self.driver.current_url)
+        self.wait.until(lambda driver: 'aaa' in self.driver.current_url)
         assert self.driver.current_url == self.result_page
 
     def test_result_page_name(self):
@@ -76,6 +77,7 @@ class TestUserTakesTheTest(LiveServerTestCase):
         self.driver.get(self.result_page)
         shown_desc = self.get_el('#description').text
         db_desc = models.Content.query.filter(models.Content.description == shown_desc).all()
+        # import pdb; pdb.set_trace()
         assert db_desc[0].gender == models.Genders[app.config['FB_USER_GENDER']]
 
     def test_result_page_img(self):
