@@ -3,6 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 import selenium.webdriver.support.ui as ui
+from flask import url_for
 
 from .. import app
 from .. import models
@@ -16,7 +17,11 @@ class TestUserTakesTheTest(LiveServerTestCase):
     def setUp(self):
         """Setup the test driver and create test users"""
         self.driver = webdriver.Firefox()
-        self.result_page = self.get_server_url() + '/result?first_name=Tom&id=111823112767411&gender=male'
+        self.result_page = url_for('result',
+                           first_name=app.config['FB_FIRST_NAME'],
+                           id=app.config['FB_USER_ID'],
+                           gender=app.config['FB_USER_GENDER'],
+                           _external=True)
         models.init_db(app.config['ADMIN_EMAIL'], app.config['ADMIN_PW'])
         self.wait = ui.WebDriverWait(self.driver, 1000)
 
@@ -50,7 +55,6 @@ class TestUserTakesTheTest(LiveServerTestCase):
         self.enter_text_field('#pass', app.config['FB_PASSWORD'])
         self.get_el('#loginbutton input[name=login]').click()
 
-
     def test_user_login(self):
         self.driver.get(self.get_server_url())
         self.clicks_on_login()
@@ -58,9 +62,9 @@ class TestUserTakesTheTest(LiveServerTestCase):
         self.submits_form()
         self.driver.switch_to.window(self.driver.window_handles[0])
         # Wait for the FB login page to be closed.
-        self.wait.until(lambda driver: len(self.driver.window_handles) == 1) # OK
+        self.wait.until(lambda driver: len(self.driver.window_handles) == 1)
         # Wait for the redirection to be completed
-        self.wait.until(lambda driver: len(self.driver.current_url) > len(self.get_server_url())+1)
+        self.wait.until(lambda driver: '?' in self.driver.current_url)
         assert self.driver.current_url == self.result_page
 
     def test_result_page_name(self):
@@ -72,11 +76,10 @@ class TestUserTakesTheTest(LiveServerTestCase):
         self.driver.get(self.result_page)
         shown_desc = self.get_el('#description').text
         db_desc = models.Content.query.filter(models.Content.description == shown_desc).all()
-        # fiw this so we can have `male` instead
-        assert db_desc[0].gender == 1
+        assert db_desc[0].gender == models.Genders[app.config['FB_USER_GENDER']]
 
     def test_result_page_img(self):
         # Check that an image is displayed for this user
         self.driver.get(self.result_page)
         img = self.get_el('#user_image').get_attribute('src')
-        assert '111823112767411' in img
+        assert app.config['FB_USER_ID'] in img
