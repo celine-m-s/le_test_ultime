@@ -5,3 +5,4 @@ app.db
 geckodriver.log
 .cache/
 *.db
+fbapp/tests/app_test.db
