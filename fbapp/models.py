@@ -1,9 +1,14 @@
 import enum
+import os
+import logging as lg
 
+import yaml
 from flask_sqlalchemy import SQLAlchemy
 from flask_security import SQLAlchemyUserDatastore, \
     UserMixin, RoleMixin
 
+# Settings
+lg.basicConfig(level='INFO')
 
 # Database
 # Create database connection object
@@ -44,7 +49,6 @@ class Content(db.Model):
         self.description = description
         self.gender = gender
 
-
 # Setup Flask-Security
 user_datastore = SQLAlchemyUserDatastore(db, User, Role)
 
@@ -56,8 +60,11 @@ def init_db(admin_email, admin_password):
     # Create an admin user
     user_datastore.create_user(email=admin_email, password=admin_password)
 
-    # Create seed data
-    db.session.add(Content("What's your favorite scary movie?", Genders['male']))
-    db.session.add(Content("THIS IS SPARTAAAAAAAAAAAAAAAAAAA", Genders['female']))
-
+    # open file with data
+    with open(os.path.join('data', 'fbapp.yaml'), 'r') as file:
+        data = yaml.load(file)
+        contents = data['content']
+        for item in contents:
+            db.session.add(Content(item['description'], Genders[item['gender']]))
+    lg.info('Database created!')
     db.session.commit()
