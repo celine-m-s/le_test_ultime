@@ -25,7 +25,7 @@ oauth2==1.9.0.post1
 olefile==0.44
 passlib==1.7.1
 pbr==3.0.1
-Pillow==4.1.1
+Pillow==8.1.1
 psycopg2==2.7.1
 py==1.4.34
 pylint==1.7.1
